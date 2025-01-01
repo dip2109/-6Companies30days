@@ -1,0 +1,42 @@
+// class Solution {
+//     public int numberOfSubarrays(int[] nums, int k) {
+//         int count = 0;
+//         for(int i=0; i<nums.length; i++){
+//             int currCount = 0;
+//             for(int j=i; j<nums.length; j++){
+//                 if(nums[j] % 2 != 0){
+//                     currCount++;
+//                 }
+
+//                 if(currCount == k){
+//                     count++;
+//                 }
+
+//                 if(currCount > k){
+//                     break;
+//                 }
+//             }
+//         }
+//         return count;
+//     }
+// }
+
+
+
+class Solution {
+    public int numberOfSubarrays(int[] nums, int k) {
+        int count = 0, currCount = 0;
+        int prefixArray[] = new int [nums.length +1];
+        prefixArray[0] = 1;
+
+        for(int num : nums){
+            currCount = (num % 2 == 0) ? currCount : currCount + 1;
+
+            if(currCount - k >= 0){
+                count += prefixArray[currCount - k];
+            }
+            prefixArray[currCount]++;
+        }
+        return count;
+    }
+}
